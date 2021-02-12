@@ -5,39 +5,41 @@ socket = zmq.Context().socket(zmq.PAIR)
 socket.connect('ipc:///tmp/cell')
 
 
-def send(cmd: str, data=None):
-    message = {'cmd': cmd}
+def send(cmd, args=None):
+    message = [cmd]
 
-    if data:
-        message.data = data
+    if args:
+        message.append(args)
 
     try:
         payload = json.dumps(message)
         socket.send_string(payload)
-        print('>> ' + payload)
+        print('>>', payload)
     except:
-        print(f'error sending:  {message}')
+        print('error sending', message)
 
 
-def route(msg):
-    command = msg['cmd']
+def process(msg):
+    cmd, *args = msg
 
-    if command == 'ping':
+    if cmd == 'ping':
         return send('pong')
-    if command == 'fuck':
-        return
-    if command == 'heartbeat':
-        return send('echo', msg)
+    if cmd == 'echo':
+        return send(cmd, args)
+    if cmd == 'heartbeat':
+        return send(True)
 
 
 while True:
     raw = socket.recv_string()
-    msg = ''
-    print('<< ' + raw)
+    print('<<', raw)
+    message = None
 
     try:
-        msg = json.loads(raw)
+        message = json.loads(raw)
     except:
-        print('error parsing the message ' + raw)
-    finally:
-        route(msg)
+        print('error parsing the message', raw)
+        print('exiting now')
+        quit()
+
+    process(message)
