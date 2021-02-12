@@ -6,9 +6,7 @@ socket.connect('ipc:///tmp/cell')
 
 
 def send(cmd: str, data=None):
-    message = {
-        "cmd": cmd
-    }
+    message = {'cmd': cmd}
 
     if data:
         message.data = data
@@ -34,9 +32,12 @@ def route(msg):
 
 while True:
     raw = socket.recv_string()
+    msg = ''
     print('<< ' + raw)
 
     try:
-        route(json.loads(raw))
+        msg = json.loads(raw)
     except:
         print('error parsing the message ' + raw)
+    finally:
+        route(msg)

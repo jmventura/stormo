@@ -1,18 +1,4 @@
 import zmq from 'zeromq'
-import express from 'express'
-
-const app = express()
-const port = 3000
-
-app.use(express.static('public'))
-
-app.get('/', (req, res) => {
-    res.send('Hello World!')
-})
-
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
 
 const socket = new zmq.Pair({linger: 0})
 
@@ -21,6 +7,7 @@ await socket.bind('ipc:///tmp/cell')
 setInterval(async function () {
     const msg = Message('heartbeat')
     await socket.send(msg)
+
     console.log('>:', msg)
 }, 2500)
 

@@ -17,31 +17,11 @@
     m.render(document.body, m("div", {"class": "container"},
         [
             m("h2", "Cognitive Cell"),
-            m("form",
-                m("fieldset", [
-                        m("label", {"for": "nameField"}, "Name"),
-                        m("input", {"type": "text", "placeholder": "CJ Patoilo", "id": "nameField"}),
-                        m("label", {"for": "ageRangeField"}, "Age Range"),
-                        m("select", {"id": "ageRangeField"}, [
-                                m("option", {"value": "0-13"}, "0-13"),
-                                m("option", {"value": "14-17"}, "14-17"),
-                                m("option", {"value": "18-23"}, "18-23"),
-                                m("option", {"value": "24+"}, "24+")
-                            ]
-                        ),
-                        m("label", {"for": "commentField"}, "Comment"),
-                        m("textarea", {"placeholder": "Hi CJ …", "id": "commentField"}),
-                        m("input", {"class": "button-primary", "type": "submit", "value": "Send"})
-                    ]
-                )
-            ),
             m("table", [
                     m("thead",
                         m("tr", [
-                                m("th", "Name"),
-                                m("th", "Age"),
-                                m("th", "Height"),
-                                m("th", "Location")
+                                m("th", "Time"),
+                                m("th", "pid"),
                             ]
                         )
                     ),
@@ -49,14 +29,10 @@
                             m("tr", [
                                     m("td", "Stephen Curry"),
                                     m("td", "27"),
-                                    m("td", "1,91"),
-                                    m("td", "Akron, OH")
                                 ]
                             ),
                             m("tr", [
                                     m("td", "Klay Thompson"),
-                                    m("td", "25"),
-                                    m("td", "2,01"),
                                     m("td", "Los Angeles, CA")
                                 ]
                             )
